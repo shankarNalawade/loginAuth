@@ -1,0 +1,32 @@
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email: </label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" formControlName="email">
+      <ng-container *ngIf="email?.invalid && (email?.touched || email?.dirty)">
+        <small class="text-danger" *ngIf="email?.errors?.['required']">Email is required</small>
+        <small class="text-danger" *ngIf="email?.errors?.['email']">Invalid email format</small>
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <label for="userPassword">Password</label>
+      <input type="password" class="form-control" id="userPassword" placeholder="Password" formControlName="password">
+      <ng-container *ngIf="password?.invalid && (password?.touched || password?.dirty)">
+        <small class="text-danger" *ngIf="password?.errors?.['required']">password is required</small>
+        <small class="text-danger" *ngIf="password?.errors?.['passwordStrength']?.isValidLength === false">
+          Password must be at least 8 characters l  ong
+        </small>
+        <small  class="text-danger" *ngIf="password?.errors?.['passwordStrength']?.hasUpperCase === false">
+          Password must contain at least one uppercase letter
+        </small>
+        <small class="text-danger" *ngIf="password?.errors?.['passwordStrength']?.hasNumber === false">
+          Password must contain at least one number
+        </small>
+        <small class="text-danger" *ngIf="password?.errors?.['passwordStrength']?.hasSpecialCharacter === false">
+          Password must contain at least one special symbol (&#64;, #, $, etc.)
+        </small>
+      </ng-container>
+    </div>
+    <button type="submit" class="btn btn-primary mt-4" [disabled]="loginForm.invalid">Submit</button>
+  </form>
+</div>
